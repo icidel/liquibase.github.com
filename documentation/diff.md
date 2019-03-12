@@ -9,13 +9,13 @@ While the best way to track database changes is by adding change sets during dev
 
 ## Running Diff ##
 
-Diff command support is available through the [command_line](command_line.html) and [ant](ant/index.html) tools.  When diff-ing databases, you specify the target database like you normally do in Liquibase (--url, --username, etc. flags) and you specify the base database with additional flags after the command name.
+Diff command support is available through the [command_line](command_line.html) and [ant](ant/index.html) tools.  When diff-ing databases, you specify the comparison database like you normally do in Liquibase (--url, --username, etc. flags) and you specify the reference database with additional flags after the command name.
 
 ## Example ##
 
 {% highlight sh %}
 liquibase.sh --driver=oracle.jdbc.OracleDriver \
-        --url=jdbc:oracle:thin:@testdb:1521:test \
+        --url=jdbc:oracle:thin:@testdb:1521:latest \
         --username=bob \
         --password=bob \
     diff \
@@ -76,13 +76,13 @@ Liquibase supports two output modes: report mode ("diff") and change log mode ("
 In report mode, a description of the differences between two databases is reported to standard out.
 
 {% highlight text %}
-Base Database: BOB jdbc:oracle:thin:@testdb:1521:latest
-Target Database: BOB jdbc:oracle:thin:@localhost/XE
+Reference Database: BOB jdbc:oracle:thin:@testdb:1521:latest
+Comparison Database: BOB jdbc:oracle:thin:@localhost/XE
 Product Name: EQUAL
 Product Version:
-     Base:   'Oracle Database 10g Enterprise Edition Release 10.2.0.1.0
+     Reference:   'Oracle Database 10g Enterprise Edition Release 10.2.0.1.0
 With the Partitioning, OLAP and Data Mining options'
-     Target: 'Oracle Database 10g Express Edition Release 10.2.0.1.0'
+     Comparison: 'Oracle Database 10g Express Edition Release 10.2.0.1.0'
 Missing Tables: NONE
 Unexpected Tables: NONE
 Missing Views: NONE
@@ -107,7 +107,7 @@ Unexpected Sequences: NONE
 
 ### ChangeLog Mode ###
 
-In change log mode, the an XML change log of what is necessary to upgrade the base database to the target database is sent to standard out. This change log can be included as is, or copied into an existing change log.  If the diff command is passed an existing change log file, the new change sets will be appended to the end of the file.
+In change log mode, the an XML change log of what is necessary to upgrade the reference database to the comparison database is sent to standard out. This change log can be included as is, or copied into an existing change log.  If the diff command is passed an existing change log file, the new change sets will be appended to the end of the file.
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
