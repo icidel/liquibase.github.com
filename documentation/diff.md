@@ -15,11 +15,11 @@ Diff command support is available through the [command_line](command_line.html) 
 
 {% highlight sh %}
 liquibase.sh --driver=oracle.jdbc.OracleDriver \
-        --url=jdbc:oracle:thin:@testdb:1521:latest \
+        --url=jdbc:oracle:thin:@appserver:1521:canarybuild \
         --username=bob \
         --password=bob \
     diff \
-        --referenceUrl=jdbc:oracle:thin:@localhost/XE \
+        --referenceUrl=jdbc:oracle:thin:@appserver:1521:stablebuild \
         --referenceUsername=bob \
         --referencePassword=bob
 {% endhighlight %}
@@ -76,8 +76,8 @@ Liquibase supports two output modes: report mode ("diff") and change log mode ("
 In report mode, a description of the differences between two databases is reported to standard out.
 
 {% highlight text %}
-Reference Database: BOB jdbc:oracle:thin:@testdb:1521:latest
-Comparison Database: BOB jdbc:oracle:thin:@localhost/XE
+Reference Database: BOB jdbc:oracle:thin:@appserver:1521:stablebuild
+Comparison Database: BOB jdbc:oracle:thin:@appserver:1521:canarybuild
 Product Name: EQUAL
 Product Version:
      Reference:   'Oracle Database 10g Enterprise Edition Release 10.2.0.1.0
